@@ -1,0 +1,36 @@
+# Nginx Load Balancer — Task 5 Challenge
+# Distributes traffic across app_nodes (Appserver 2 & 3)
+
+upstream frontend_pool {
+    server 108.137.104.154:3000;
+    server 15.232.78.179:3000;
+}
+
+upstream backend_pool {
+    server 108.137.104.154:5000;
+    server 15.232.78.179:5000;
+}
+
+server {
+    listen 80;
+    server_name staging.rizaladlan.studentdumbways.my.id;
+
+    location / {
+        proxy_pass http://frontend_pool;
+        proxy_set_header Host              $host;
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+    }
+}
+
+server {
+    listen 80;
+    server_name api.staging.rizaladlan.studentdumbways.my.id;
+
+    location / {
+        proxy_pass http://backend_pool;
+        proxy_set_header Host              $host;
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+    }
+}
