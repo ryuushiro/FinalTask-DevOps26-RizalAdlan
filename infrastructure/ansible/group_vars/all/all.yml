@@ -1,0 +1,4 @@
+---
+# Shared variables for all servers
+new_ssh_port: 6969
+new_user: finaltask-rizal
