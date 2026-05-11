@@ -1,0 +1,15 @@
+#!/bin/bash
+# Certbot auto-renewal for *.rizaladlan.studentdumbways.my.id
+# Runs daily via cron. Renews only if < 30 days remaining.
+
+LOG="/var/log/certbot-renewal.log"
+
+echo "[$(date)] Renewal check..." >> "$LOG"
+
+certbot renew --quiet --post-hook "systemctl reload nginx" >> "$LOG" 2>&1
+
+if [ $? -eq 0 ]; then
+    echo "[$(date)] OK." >> "$LOG"
+else
+    echo "[$(date)] FAILED — check /var/log/letsencrypt/letsencrypt.log" >> "$LOG"
+fi
