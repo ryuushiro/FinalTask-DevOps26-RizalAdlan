@@ -1,0 +1,5 @@
+---
+- import_playbook: common.yml
+- import_playbook: gateway.yml
+- import_playbook: appserver.yml
+- import_playbook: sonarqube.yml

@@ -1,0 +1,962 @@
+{
+    "meta": {
+        "type": "db",
+        "canSave": true,
+        "canEdit": true,
+        "canAdmin": true,
+        "canStar": true,
+        "canDelete": true,
+        "slug": "cpu-usage",
+        "url": "/d/adfwwnk/cpu-usage",
+        "expires": "0001-01-01T00:00:00Z",
+        "created": "2026-05-05T18:14:28Z",
+        "updated": "2026-05-05T23:06:04Z",
+        "updatedBy": "admin",
+        "createdBy": "admin",
+        "version": 15,
+        "hasAcl": false,
+        "isFolder": false,
+        "apiVersion": "v0alpha1",
+        "folderId": 0,
+        "folderUid": "",
+        "folderTitle": "General",
+        "folderUrl": "",
+        "provisioned": false,
+        "provisionedExternalId": "",
+        "annotationsPermissions": {
+            "dashboard": {
+                "canAdd": true,
+                "canEdit": true,
+                "canDelete": true
+            }
+        }
+    },
+    "dashboard": {
+        "annotations": {
+            "list": [
+                {
+                    "builtIn": 1,
+                    "datasource": {
+                        "type": "grafana",
+                        "uid": "-- Grafana --"
+                    },
+                    "enable": true,
+                    "hide": true,
+                    "iconColor": "rgba(0, 211, 255, 1)",
+                    "name": "Annotations & Alerts",
+                    "type": "dashboard"
+                }
+            ]
+        },
+        "editable": true,
+        "fiscalYearStartMonth": 0,
+        "graphTooltip": 0,
+        "id": 2589413286289408,
+        "liveNow": false,
+        "panels": [
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ffl635rbemf40e"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "color": {
+                            "mode": "palette-classic"
+                        },
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "green",
+                                    "value": 0
+                                },
+                                {
+                                    "color": "red",
+                                    "value": 80
+                                }
+                            ]
+                        },
+                        "unit": "percent"
+                    }
+                },
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 0,
+                    "y": 0
+                },
+                "id": 2,
+                "options": {
+                    "barShape": "flat",
+                    "barWidthFactor": 0.3,
+                    "effects": {
+                        "barGlow": false,
+                        "centerGlow": false,
+                        "gradient": true
+                    },
+                    "endpointMarker": "point",
+                    "minVizHeight": 75,
+                    "minVizWidth": 75,
+                    "orientation": "auto",
+                    "reduceOptions": {
+                        "calcs": [
+                            "lastNotNull"
+                        ],
+                        "fields": "",
+                        "values": false
+                    },
+                    "segmentCount": 1,
+                    "segmentSpacing": 0.3,
+                    "shape": "gauge",
+                    "showThresholdLabels": false,
+                    "showThresholdMarkers": false,
+                    "sizing": "auto",
+                    "sparkline": true,
+                    "textMode": "auto"
+                },
+                "pluginVersion": "13.0.1",
+                "targets": [
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "ffl635rbemf40e"
+                        },
+                        "editorMode": "code",
+                        "expr": "(1 - (avg by (instance)(node_memory_MemAvailable_bytes) / avg by (instance)(node_memory_MemTotal_bytes))) * 100",
+                        "legendFormat": "__auto",
+                        "range": true,
+                        "refId": "A"
+                    }
+                ],
+                "title": "RAM USAGE (%)",
+                "transformations": [
+                    {
+                        "id": "filterFieldsByName",
+                        "options": {
+                            "include": {
+                                "names": [
+                                    "Time",
+                                    "Appserver 1",
+                                    "Appserver 2",
+                                    "Appserver 3",
+                                    "Gateway"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "type": "gauge"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ffl635rbemf40e"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "color": {
+                            "mode": "palette-classic"
+                        },
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "green",
+                                    "value": 0
+                                }
+                            ]
+                        },
+                        "unit": "decmbytes"
+                    }
+                },
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 12,
+                    "y": 0
+                },
+                "id": 3,
+                "options": {
+                    "barShape": "flat",
+                    "barWidthFactor": 0.3,
+                    "effects": {
+                        "barGlow": false,
+                        "centerGlow": false,
+                        "gradient": true
+                    },
+                    "endpointMarker": "point",
+                    "minVizHeight": 75,
+                    "minVizWidth": 75,
+                    "orientation": "auto",
+                    "reduceOptions": {
+                        "calcs": [
+                            "lastNotNull"
+                        ],
+                        "fields": "",
+                        "values": false
+                    },
+                    "segmentCount": 1,
+                    "segmentSpacing": 0.3,
+                    "shape": "gauge",
+                    "showThresholdLabels": false,
+                    "showThresholdMarkers": false,
+                    "sizing": "auto",
+                    "sparkline": true,
+                    "textMode": "auto"
+                },
+                "pluginVersion": "13.0.1",
+                "targets": [
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "ffl635rbemf40e"
+                        },
+                        "editorMode": "code",
+                        "expr": "avg by (instance) (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / 1024 / 1024",
+                        "legendFormat": "__auto",
+                        "range": true,
+                        "refId": "A"
+                    }
+                ],
+                "title": "RAM USAGE (MB)",
+                "transformations": [
+                    {
+                        "id": "filterFieldsByName",
+                        "options": {
+                            "include": {
+                                "names": [
+                                    "Time",
+                                    "Appserver 1",
+                                    "Appserver 2",
+                                    "Appserver 3",
+                                    "Gateway"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "type": "gauge"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ffl635rbemf40e"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "color": {
+                            "mode": "palette-classic"
+                        },
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "green",
+                                    "value": 0
+                                },
+                                {
+                                    "color": "red",
+                                    "value": 80
+                                }
+                            ]
+                        },
+                        "unit": "percent"
+                    }
+                },
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 0,
+                    "y": 8
+                },
+                "id": 1,
+                "options": {
+                    "barShape": "flat",
+                    "barWidthFactor": 0.3,
+                    "effects": {
+                        "barGlow": false,
+                        "centerGlow": false,
+                        "gradient": true
+                    },
+                    "endpointMarker": "point",
+                    "minVizHeight": 75,
+                    "minVizWidth": 75,
+                    "orientation": "auto",
+                    "reduceOptions": {
+                        "calcs": [
+                            "lastNotNull"
+                        ],
+                        "fields": "",
+                        "values": false
+                    },
+                    "segmentCount": 1,
+                    "segmentSpacing": 0.3,
+                    "shape": "gauge",
+                    "showThresholdLabels": false,
+                    "showThresholdMarkers": false,
+                    "sizing": "auto",
+                    "sparkline": true,
+                    "textMode": "auto"
+                },
+                "pluginVersion": "13.0.1",
+                "targets": [
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "ffl635rbemf40e"
+                        },
+                        "editorMode": "code",
+                        "expr": "100 - (avg by (instance)(irate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+                        "legendFormat": "__auto",
+                        "range": true,
+                        "refId": "A"
+                    }
+                ],
+                "title": "CPU USAGE (%)",
+                "transformations": [
+                    {
+                        "id": "filterFieldsByName",
+                        "options": {
+                            "include": {
+                                "names": [
+                                    "Time",
+                                    "Appserver 1",
+                                    "Appserver 2",
+                                    "Appserver 3",
+                                    "Gateway"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "type": "gauge"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ffl635rbemf40e"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "color": {
+                            "mode": "palette-classic"
+                        },
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "green",
+                                    "value": 0
+                                }
+                            ]
+                        },
+                        "unit": "decgbytes"
+                    }
+                },
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 12,
+                    "y": 8
+                },
+                "id": 4,
+                "options": {
+                    "displayMode": "lcd",
+                    "legend": {
+                        "calcs": [],
+                        "displayMode": "list",
+                        "placement": "bottom",
+                        "showLegend": false
+                    },
+                    "maxVizHeight": 300,
+                    "minVizHeight": 16,
+                    "minVizWidth": 8,
+                    "namePlacement": "auto",
+                    "orientation": "auto",
+                    "reduceOptions": {
+                        "calcs": [
+                            "lastNotNull"
+                        ],
+                        "fields": "",
+                        "values": false
+                    },
+                    "showUnfilled": true,
+                    "sizing": "auto",
+                    "valueMode": "color"
+                },
+                "pluginVersion": "13.0.1",
+                "targets": [
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "ffl635rbemf40e"
+                        },
+                        "editorMode": "code",
+                        "expr": "avg by (instance) (node_filesystem_size_bytes{mountpoint=\"/\"} - node_filesystem_avail_bytes{mountpoint=\"/\"}) / 1024 / 1024 / 1024",
+                        "legendFormat": "__auto",
+                        "range": true,
+                        "refId": "A"
+                    }
+                ],
+                "title": "DISK USAGE ",
+                "transformations": [
+                    {
+                        "id": "filterFieldsByName",
+                        "options": {
+                            "include": {
+                                "names": [
+                                    "Time",
+                                    "Appserver 1",
+                                    "Appserver 2",
+                                    "Appserver 3",
+                                    "Gateway"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "type": "bargauge"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ffl635rbemf40e"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "color": {
+                            "mode": "palette-classic"
+                        },
+                        "custom": {
+                            "axisBorderShow": false,
+                            "axisCenteredZero": false,
+                            "axisColorMode": "text",
+                            "axisLabel": "",
+                            "axisPlacement": "auto",
+                            "barAlignment": 0,
+                            "barWidthFactor": 0.6,
+                            "drawStyle": "line",
+                            "fillOpacity": 0,
+                            "gradientMode": "none",
+                            "hideFrom": {
+                                "legend": false,
+                                "tooltip": false,
+                                "viz": false
+                            },
+                            "insertNulls": false,
+                            "lineInterpolation": "linear",
+                            "lineWidth": 1,
+                            "pointSize": 5,
+                            "scaleDistribution": {
+                                "type": "linear"
+                            },
+                            "showPoints": "auto",
+                            "showValues": false,
+                            "spanNulls": false,
+                            "stacking": {
+                                "group": "A",
+                                "mode": "none"
+                            },
+                            "thresholdsStyle": {
+                                "mode": "off"
+                            }
+                        },
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "green",
+                                    "value": 0
+                                },
+                                {
+                                    "color": "red",
+                                    "value": 80
+                                }
+                            ]
+                        },
+                        "unit": "binBps"
+                    }
+                },
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 0,
+                    "y": 16
+                },
+                "id": 5,
+                "options": {
+                    "annotations": {
+                        "clustering": -1,
+                        "multiLane": false
+                    },
+                    "legend": {
+                        "calcs": [],
+                        "displayMode": "list",
+                        "placement": "bottom",
+                        "showLegend": true
+                    },
+                    "tooltip": {
+                        "hideZeros": false,
+                        "mode": "single",
+                        "sort": "none"
+                    }
+                },
+                "pluginVersion": "13.0.1",
+                "targets": [
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "ffl635rbemf40e"
+                        },
+                        "editorMode": "code",
+                        "expr": "avg by (instance) (irate(node_network_receive_bytes_total{device!~\"lo|veth.|br.\"}[5m]))",
+                        "legendFormat": "__auto",
+                        "range": true,
+                        "refId": "A"
+                    }
+                ],
+                "title": "NETWORK RECEIVED",
+                "transformations": [
+                    {
+                        "id": "filterFieldsByName",
+                        "options": {
+                            "include": {
+                                "names": [
+                                    "Time",
+                                    "Appserver 1",
+                                    "Appserver 2",
+                                    "Appserver 3",
+                                    "Gateway"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "type": "timeseries"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ffl635rbemf40e"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "color": {
+                            "mode": "palette-classic"
+                        },
+                        "custom": {
+                            "axisBorderShow": false,
+                            "axisCenteredZero": false,
+                            "axisColorMode": "text",
+                            "axisLabel": "",
+                            "axisPlacement": "auto",
+                            "barAlignment": 0,
+                            "barWidthFactor": 0.6,
+                            "drawStyle": "line",
+                            "fillOpacity": 0,
+                            "gradientMode": "none",
+                            "hideFrom": {
+                                "legend": false,
+                                "tooltip": false,
+                                "viz": false
+                            },
+                            "insertNulls": false,
+                            "lineInterpolation": "linear",
+                            "lineWidth": 1,
+                            "pointSize": 5,
+                            "scaleDistribution": {
+                                "type": "linear"
+                            },
+                            "showPoints": "auto",
+                            "showValues": false,
+                            "spanNulls": false,
+                            "stacking": {
+                                "group": "A",
+                                "mode": "none"
+                            },
+                            "thresholdsStyle": {
+                                "mode": "off"
+                            }
+                        },
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "green",
+                                    "value": 0
+                                },
+                                {
+                                    "color": "red",
+                                    "value": 80
+                                }
+                            ]
+                        },
+                        "unit": "binBps"
+                    }
+                },
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 12,
+                    "y": 16
+                },
+                "id": 6,
+                "options": {
+                    "annotations": {
+                        "clustering": -1,
+                        "multiLane": false
+                    },
+                    "legend": {
+                        "calcs": [],
+                        "displayMode": "list",
+                        "placement": "bottom",
+                        "showLegend": true
+                    },
+                    "tooltip": {
+                        "hideZeros": false,
+                        "mode": "single",
+                        "sort": "none"
+                    }
+                },
+                "pluginVersion": "13.0.1",
+                "targets": [
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "ffl635rbemf40e"
+                        },
+                        "editorMode": "code",
+                        "expr": "avg by (instance) (irate(node_network_transmit_bytes_total{device!~\"lo|veth.|br.\"}[5m]))",
+                        "legendFormat": "__auto",
+                        "range": true,
+                        "refId": "A"
+                    }
+                ],
+                "title": "NETWORK TRANSMITTED",
+                "transformations": [
+                    {
+                        "id": "filterFieldsByName",
+                        "options": {
+                            "include": {
+                                "names": [
+                                    "Time",
+                                    "Appserver 1",
+                                    "Appserver 2",
+                                    "Appserver 3",
+                                    "Gateway"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "type": "timeseries"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ffl635rbemf40e"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "color": {
+                            "mode": "palette-classic"
+                        },
+                        "mappings": [
+                            {
+                                "options": {
+                                    "from": 0,
+                                    "result": {
+                                        "color": "green",
+                                        "index": 0,
+                                        "text": "RUNNING"
+                                    },
+                                    "to": 30
+                                },
+                                "type": "range"
+                            }
+                        ],
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "green",
+                                    "value": 0
+                                }
+                            ]
+                        },
+                        "unit": "s"
+                    }
+                },
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 0,
+                    "y": 24
+                },
+                "id": 7,
+                "interval": "5s",
+                "options": {
+                    "colorMode": "background",
+                    "graphMode": "none",
+                    "justifyMode": "auto",
+                    "orientation": "horizontal",
+                    "percentChangeColorMode": "standard",
+                    "reduceOptions": {
+                        "calcs": [
+                            "lastNotNull"
+                        ],
+                        "fields": "",
+                        "values": false
+                    },
+                    "showPercentChange": false,
+                    "textMode": "value_and_name",
+                    "wideLayout": true
+                },
+                "pluginVersion": "13.0.1",
+                "targets": [
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "ffl635rbemf40e"
+                        },
+                        "editorMode": "code",
+                        "expr": "label_replace(time() - container_last_seen{image!=\"\", name!~\"cadvisor\"}, \"host\", \"$1\", \"instance\", \"cAdvisor-(.*)\")",
+                        "legendFormat": "{{name}} on {{instance}}",
+                        "range": true,
+                        "refId": "A"
+                    }
+                ],
+                "title": "CONTAINER STATUS",
+                "transformations": [
+                    {
+                        "id": "filterFieldsByName",
+                        "options": {
+                            "include": {
+                                "names": [
+                                    "Time",
+                                    "node-exporter on Appserver 1",
+                                    "prometheus on Appserver 1",
+                                    "grafana on Appserver 1",
+                                    "alertmanager on Appserver 1"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "type": "stat"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ffl635rbemf40e"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "color": {
+                            "mode": "palette-classic"
+                        },
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "green",
+                                    "value": 0
+                                },
+                                {
+                                    "color": "red",
+                                    "value": 80
+                                }
+                            ]
+                        },
+                        "unit": "percent"
+                    }
+                },
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 12,
+                    "y": 24
+                },
+                "id": 8,
+                "options": {
+                    "displayMode": "lcd",
+                    "legend": {
+                        "calcs": [],
+                        "displayMode": "list",
+                        "placement": "bottom",
+                        "showLegend": false
+                    },
+                    "maxVizHeight": 300,
+                    "minVizHeight": 16,
+                    "minVizWidth": 8,
+                    "namePlacement": "auto",
+                    "orientation": "auto",
+                    "reduceOptions": {
+                        "calcs": [
+                            "lastNotNull"
+                        ],
+                        "fields": "",
+                        "values": false
+                    },
+                    "showUnfilled": true,
+                    "sizing": "auto",
+                    "valueMode": "color"
+                },
+                "pluginVersion": "13.0.1",
+                "targets": [
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "ffl635rbemf40e"
+                        },
+                        "editorMode": "code",
+                        "expr": "sum by (name, instance) (rate(container_cpu_usage_seconds_total{image!=\"\", name!~\"cadvisor\"}[5m])) * 100\r\n",
+                        "legendFormat": "{{name}} on {{instance}}",
+                        "range": true,
+                        "refId": "A"
+                    }
+                ],
+                "title": "CONTAINER CPU",
+                "transformations": [
+                    {
+                        "id": "filterFieldsByName",
+                        "options": {
+                            "include": {
+                                "names": [
+                                    "alertmanager on Appserver 1",
+                                    "grafana on Appserver 1",
+                                    "node-exporter on Appserver 1",
+                                    "prometheus on Appserver 1"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "type": "bargauge"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "ffl635rbemf40e"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "color": {
+                            "mode": "palette-classic"
+                        },
+                        "custom": {
+                            "axisBorderShow": false,
+                            "axisCenteredZero": false,
+                            "axisColorMode": "text",
+                            "axisLabel": "",
+                            "axisPlacement": "auto",
+                            "barAlignment": 0,
+                            "barWidthFactor": 0.6,
+                            "drawStyle": "line",
+                            "fillOpacity": 0,
+                            "gradientMode": "none",
+                            "hideFrom": {
+                                "legend": false,
+                                "tooltip": false,
+                                "viz": false
+                            },
+                            "insertNulls": false,
+                            "lineInterpolation": "linear",
+                            "lineWidth": 1,
+                            "pointSize": 5,
+                            "scaleDistribution": {
+                                "type": "linear"
+                            },
+                            "showPoints": "auto",
+                            "showValues": false,
+                            "spanNulls": false,
+                            "stacking": {
+                                "group": "A",
+                                "mode": "none"
+                            },
+                            "thresholdsStyle": {
+                                "mode": "off"
+                            }
+                        },
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "green",
+                                    "value": 0
+                                }
+                            ]
+                        },
+                        "unit": "bytes"
+                    }
+                },
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 0,
+                    "y": 32
+                },
+                "id": 9,
+                "options": {
+                    "annotations": {
+                        "clustering": -1,
+                        "multiLane": false
+                    },
+                    "legend": {
+                        "calcs": [],
+                        "displayMode": "list",
+                        "placement": "bottom",
+                        "showLegend": true
+                    },
+                    "tooltip": {
+                        "hideZeros": false,
+                        "mode": "single",
+                        "sort": "none"
+                    }
+                },
+                "pluginVersion": "13.0.1",
+                "targets": [
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "ffl635rbemf40e"
+                        },
+                        "editorMode": "code",
+                        "expr": "sum by (name, host) (label_replace(container_memory_working_set_bytes{image!=\"\", name!~\"cadvisor\"}, \"host\", \"$1\", \"alias\", \"cAdvisor-(.*)\"))",
+                        "legendFormat": "__auto",
+                        "range": true,
+                        "refId": "A"
+                    }
+                ],
+                "title": "CONTAINER RAM",
+                "type": "timeseries"
+            }
+        ],
+        "preload": false,
+        "refresh": "",
+        "schemaVersion": 42,
+        "time": {
+            "from": "now-6h",
+            "to": "now"
+        },
+        "timepicker": {
+            "refresh_intervals": [
+                "5s",
+                "10s",
+                "30s",
+                "1m",
+                "5m",
+                "15m",
+                "30m",
+                "1h",
+                "2h",
+                "1d"
+            ]
+        },
+        "timezone": "browser",
+        "title": "CPU USAGE (%)",
+        "uid": "adfwwnk",
+        "version": 15
+    }
+}

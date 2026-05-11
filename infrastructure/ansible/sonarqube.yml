@@ -1,0 +1,89 @@
+---
+# =============================================================================
+# sonarqube.yml — Task 6: SonarQube for CI/CD Code Quality
+# =============================================================================
+# Target host  : monitoring (108.137.128.226)
+# Run with     : ansible-playbook -i inventory.ini sonarqube.yml
+# Purpose      : Add swap (low-RAM server), deploy SonarQube Community Edition
+# =============================================================================
+
+- name: SonarQube — CI/CD Code Quality Server
+  hosts: monitoring
+  become: yes
+
+  tasks:
+
+    # -----------------------------------------------------------------------
+    # Swap — Appserver 1 has only 1.9 GB RAM, SonarQube requires 2 GB.
+    # A 2 GB swap file provides enough virtual memory.
+    # -----------------------------------------------------------------------
+    - name: Allocate swap file (2 GB)
+      command: fallocate -l 2G /swapfile
+      args:
+        creates: /swapfile
+
+    - name: Set permissions on swap file
+      file:
+        path: /swapfile
+        mode: "0600"
+
+    - name: Format swap file
+      command: mkswap /swapfile
+      when: ansible_swaptotal_mb < 512
+      changed_when: true
+
+    - name: Enable swap
+      command: swapon /swapfile
+      when: ansible_swaptotal_mb < 512
+      changed_when: true
+
+    - name: Persist swap in fstab
+      mount:
+        path: none
+        src: /swapfile
+        fstype: swap
+        opts: sw
+        state: present
+
+    # -----------------------------------------------------------------------
+    # Kernel tuning — Elasticsearch (embedded in SonarQube) requires this
+    # -----------------------------------------------------------------------
+    - name: Set vm.max_map_count for Elasticsearch
+      sysctl:
+        name: vm.max_map_count
+        value: "262144"
+        state: present
+        reload: yes
+
+    # -----------------------------------------------------------------------
+    # SonarQube Community Edition
+    # -----------------------------------------------------------------------
+    - name: Allow SonarQube port 9000
+      ufw:
+        rule: allow
+        port: "9000"
+        proto: tcp
+
+    - name: Run SonarQube container
+      community.docker.docker_container:
+        name: sonarqube
+        image: sonarqube:community
+        state: started
+        restart_policy: always
+        ports:
+          - "9000:9000"
+        env:
+          SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+        # Elasticsearch bootstrap checks fail on low-RAM machines;
+        # disabling them allows SonarQube to start with 1.9 GB + swap.
+
+    # -----------------------------------------------------------------------
+    # Smoke test
+    # -----------------------------------------------------------------------
+    - name: Wait for SonarQube to become ready
+      uri:
+        url: "http://localhost:9000/"
+        method: GET
+        status_code: 200
+      retries: 30
+      delay: 10

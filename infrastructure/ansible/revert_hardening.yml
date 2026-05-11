@@ -1,0 +1,33 @@
+---
+- name: REVERT Hardening (Again)
+  hosts: all
+  become: yes
+  tasks:
+    - name: Allow port 22 in UFW
+      ufw:
+        rule: allow
+        port: '22'
+        proto: tcp
+
+    - name: Ensure main sshd_config has Port 22
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^Port\s+'
+        line: "Port 22"
+
+    - name: Ensure main sshd_config allows password auth
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PasswordAuthentication'
+        line: "PasswordAuthentication yes"
+
+    - name: Ensure main sshd_config does NOT have AuthenticationMethods
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^AuthenticationMethods'
+        state: absent
+
+    - name: Restart SSH
+      service:
+        name: ssh
+        state: restarted
