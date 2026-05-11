@@ -1,0 +1,6 @@
+---
+# Connection settings for appservers (used after Task 3 hardening)
+ansible_port: 6969
+ansible_user: "{{ new_user }}"
+ansible_password: "{{ vault_ssh_password }}"
+ansible_become_password: "{{ vault_sudo_password }}"
